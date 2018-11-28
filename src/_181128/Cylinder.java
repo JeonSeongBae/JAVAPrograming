@@ -28,5 +28,4 @@ public class Cylinder extends Circle {
 		this.height = height;
 	}
 
-
 }
