@@ -24,7 +24,7 @@ public class Circle {
 	}
 
 	public double getArea() {
-		return radius * radius * 3.14;
+		return Math.pow(radius, 2) * Math.PI;
 	}
 
 	public void setRadius(double radius) {
