@@ -9,5 +9,5 @@ public class FileErrorTest {
 	public static void main(String[] args) throws FileNotFoundException {
 		Scanner in = new Scanner(new File("data.txt"));
 	}
-
+	 
 }
