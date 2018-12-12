@@ -1,5 +1,6 @@
 package _181121;
 
+import java.util.Random;
 import java.util.Scanner;
 
 class Main extends Sprite {
@@ -32,8 +33,8 @@ class Main extends Sprite {
 
 class Gold extends Sprite {
 	public Gold() {
-		x = 3;
-		y = 6;
+		x = random.nextInt(17) + 1;
+		y = random.nextInt(8) + 1;
 	}
 
 	@Override
@@ -47,7 +48,8 @@ class Monster extends Sprite
 {
 
 	public Monster() {
-		x = y = 7;
+		x = random.nextInt(17) + 1;
+		y = random.nextInt(8) + 1;
 	}
 
 	@Override
@@ -71,8 +73,10 @@ class Monster extends Sprite
 }
 
 abstract class Sprite {
-	int x = 3;
-	int y = 3;
+	Random random = new Random();
+
+	int x = random.nextInt(17) + 1;
+	int y = random.nextInt(8) + 1;
 
 	abstract void move(char c);
 }
@@ -84,14 +88,14 @@ public class MiniProject {
 	public static void main(String[] args) {
 		char[][] map = {
 				{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' },
-				{ '#', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', '#' },
-				{ '#', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', '#' },
-				{ '#', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', '#' },
-				{ '#', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', '#' },
-				{ '#', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', '#' },
-				{ '#', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', '#' },
-				{ '#', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', '#' },
-				{ '#', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', ',', '#' },
+				{ '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
+				{ '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
+				{ '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
+				{ '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
+				{ '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
+				{ '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
+				{ '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
+				{ '#', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', '#' },
 				{ '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#', '#' }, };
 		sc = new Scanner(System.in);
 
@@ -99,50 +103,32 @@ public class MiniProject {
 		Monster monster = new Monster();
 		Gold gold = new Gold();
 
+		System.out.println("방향 w(위) s(아래) a(왼쪽) d(오른쪽)");
 		while (true) {
-			boolean check = false;
 			for (int y = 0; y < map.length; y++) {
-				boolean check2 = false;
 				for (int x = 0; x < map[y].length; x++) {
-					boolean check3 = false;
 					if (y == mine.y && x == mine.x) {
-						System.out.print('@');
-						check3 = true;
-					}
-					if (y == monster.y && x == monster.x) {
-						System.out.print('M');
-						if (check3) {
-							System.out.println();
-							System.out.println("Fail");
-							check2 = true;
-							break;
-						}
+						System.out.print('O');
+					} else if (y == monster.y && x == monster.x) {
+						System.out.print('X');
 					} else if (y == gold.y && x == gold.x) {
-						System.out.print('G');
-						if (check3) {
-							System.out.println();
-							System.out.println("Sucess");
-							check2 = true;
-							break;
-						}
+						System.out.print('@');
 					} else {
 						System.out.print(map[y][x]);
 					}
 				}
-				if (check2) {
-					check = true;
-					break;
-				}
 				System.out.println();
 			}
-			if (check) {
-				System.out.println("게임종료");
-				break;
-			}
-			System.out.print("방향 wsad");
 			char c = sc.next().charAt(0);
 			mine.move(c);
 			monster.move(c);
+			if (mine.x == gold.x && mine.y == gold.y) {
+				System.out.println("Sucess");
+				break;
+			} else if (mine.x == monster.x && mine.y == monster.y) {
+				System.out.println("Fail");
+				break;
+			}
 		}
 	}
 
